@@ -19,7 +19,7 @@ import Node from "./Node";
  */
 const IMAGE_INPUT_REGEX = /!\[(?<alt>.*?)]\((?<filename>.*?)(?=\“|\))\“?(?<layoutclass>[^\”]+)?\”?\)/;
 
-const uploadPlugin = options =>
+const uploadPlugin = (options) =>
   new Plugin({
     props: {
       handleDOMEvents: {
@@ -36,8 +36,8 @@ const uploadPlugin = options =>
           // check if we actually pasted any files
           const files = Array.prototype.slice
             .call(event.clipboardData.items)
-            .map(dt => dt.getAsFile())
-            .filter(file => file);
+            .map((dt) => dt.getAsFile())
+            .filter((file) => file);
 
           if (files.length === 0) return false;
 
@@ -183,7 +183,7 @@ export default class Image extends Node {
     }
   };
 
-  handleBlur = ({ node, getPos }) => event => {
+  handleBlur = ({ node, getPos }) => (event) => {
     const alt = event.target.innerText;
     const { src, title, layoutClass } = node.attrs;
 
@@ -363,7 +363,7 @@ const Caption = styled.p`
   display: block;
   font-size: 13px;
   font-style: italic;
-  color: ${props => props.theme.textSecondary};
+  color: ${(props) => props.theme.textSecondary};
   padding: 2px 0;
   line-height: 16px;
   text-align: center;
@@ -378,7 +378,7 @@ const Caption = styled.p`
   }
 
   &:empty:before {
-    color: ${props => props.theme.placeholder};
+    color: ${(props) => props.theme.placeholder};
     content: "Write a caption";
     pointer-events: none;
   }
