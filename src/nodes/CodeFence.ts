@@ -1,19 +1,5 @@
 import refractor from "refractor/core";
-import bash from "refractor/lang/bash";
-import css from "refractor/lang/css";
-import clike from "refractor/lang/clike";
-import csharp from "refractor/lang/csharp";
-import go from "refractor/lang/go";
-import java from "refractor/lang/java";
-import javascript from "refractor/lang/javascript";
-import json from "refractor/lang/json";
-import markup from "refractor/lang/markup";
-import php from "refractor/lang/php";
-import python from "refractor/lang/python";
-import powershell from "refractor/lang/powershell";
-import ruby from "refractor/lang/ruby";
-import sql from "refractor/lang/sql";
-import typescript from "refractor/lang/typescript";
+import yaml from "refractor/lang/yaml";
 
 import { setBlockType } from "prosemirror-commands";
 import { textblockTypeInputRule } from "prosemirror-inputrules";
@@ -22,23 +8,7 @@ import Prism, { LANGUAGES } from "../plugins/Prism";
 import Node from "./Node";
 import { ToastType } from "../types";
 
-[
-  bash,
-  css,
-  clike,
-  csharp,
-  go,
-  java,
-  javascript,
-  json,
-  markup,
-  php,
-  python,
-  powershell,
-  ruby,
-  sql,
-  typescript,
-].forEach(refractor.register);
+refractor.register(yaml);
 
 export default class CodeFence extends Node {
   get languageOptions() {
@@ -125,7 +95,7 @@ export default class CodeFence extends Node {
     };
   }
 
-  handleLanguageChange = event => {
+  handleLanguageChange = (event) => {
     const { view } = this.editor;
     const { tr } = view.state;
     const element = event.target;
@@ -168,7 +138,7 @@ export default class CodeFence extends Node {
   parseMarkdown() {
     return {
       block: "code_block",
-      getAttrs: tok => ({ language: tok.info }),
+      getAttrs: (tok) => ({ language: tok.info }),
     };
   }
 }
