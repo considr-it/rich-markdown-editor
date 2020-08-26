@@ -23,7 +23,7 @@ export default class CodeFence extends Node {
     return {
       attrs: {
         language: {
-          default: "javascript",
+          default: "yaml",
         },
       },
       content: "text*",
