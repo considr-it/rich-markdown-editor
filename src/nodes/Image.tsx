@@ -59,7 +59,7 @@ const uploadPlugin = (options) =>
           }
 
           // filter to only include image files
-          const files = getDataTransferFiles(event).filter(file =>
+          const files = getDataTransferFiles(event).filter((file) =>
             /image/i.test(file.type)
           );
           if (files.length === 0) {
@@ -84,7 +84,7 @@ const uploadPlugin = (options) =>
   });
 
 const IMAGE_CLASSES = ["right-50", "left-50"];
-const getLayoutAndTitle = tokenTitle => {
+const getLayoutAndTitle = (tokenTitle) => {
   if (!tokenTitle) return {};
   if (IMAGE_CLASSES.includes(tokenTitle)) {
     return {
@@ -142,7 +142,7 @@ export default class Image extends Node {
           },
         },
       ],
-      toDOM: node => {
+      toDOM: (node) => {
         const className = node.attrs.layoutClass
           ? `image image-${node.attrs.layoutClass}`
           : "image";
@@ -158,7 +158,7 @@ export default class Image extends Node {
     };
   }
 
-  handleKeyDown = ({ node, getPos }) => event => {
+  handleKeyDown = ({ node, getPos }) => (event) => {
     // Pressing Enter in the caption field should move the cursor/selection
     // below the image
     if (event.key === "Enter") {
@@ -203,7 +203,7 @@ export default class Image extends Node {
     view.dispatch(transaction);
   };
 
-  handleSelect = ({ getPos }) => event => {
+  handleSelect = ({ getPos }) => (event) => {
     event.preventDefault();
 
     const { view } = this.editor;
@@ -212,7 +212,7 @@ export default class Image extends Node {
     view.dispatch(transaction);
   };
 
-  component = props => {
+  component = (props) => {
     const { theme, isEditable, isSelected } = props;
     const { alt, src, title, layoutClass } = props.node.attrs;
     const className = layoutClass ? `image image-${layoutClass}` : "image";
@@ -223,19 +223,9 @@ export default class Image extends Node {
           className={isSelected ? "ProseMirror-selectednode" : ""}
           onClick={isEditable ? this.handleSelect(props) : undefined}
         >
-          <ImageZoom
-            image={{
-              src,
-              alt,
-              title,
-            }}
-            defaultStyles={{
-              overlay: {
-                backgroundColor: theme.background,
-              },
-            }}
-            shouldRespectMaxDimension
-          />
+          <ImageZoom overlayBgColorStart={theme.background}>
+            <img src={src} alt={alt} title={title} />
+          </ImageZoom>
         </ImageWrapper>
 
         {(isEditable || alt) && (
@@ -271,7 +261,7 @@ export default class Image extends Node {
   parseMarkdown() {
     return {
       node: "image",
-      getAttrs: token => {
+      getAttrs: (token) => {
         return {
           src: token.attrGet("src"),
           alt: (token.children[0] && token.children[0].content) || null,
@@ -313,7 +303,7 @@ export default class Image extends Node {
         dispatch(state.tr.setNodeMarkup(selection.$from.pos, undefined, attrs));
         return true;
       },
-      createImage: attrs => (state, dispatch) => {
+      createImage: (attrs) => (state, dispatch) => {
         const { selection } = state;
         const position = selection.$cursor
           ? selection.$cursor.pos
