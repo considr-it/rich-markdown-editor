@@ -64,9 +64,11 @@ export default class MarkdownPaste extends Extension {
               return true;
             }
 
-            // otherwise, if we have html on the clipboard then fallback to the
-            // default HTML parser behavior that comes with Prosemirror.
-            if (text.length === 0 || html) return false;
+            const { plainText } = this.editor.props;
+
+            // otherwise, if we have html on the clipboard and don't have plainText option
+            // then fallback to the default HTML parser behavior that comes with Prosemirror.
+            if (text.length === 0 || (html && !plainText)) return false;
 
             event.preventDefault();
 
