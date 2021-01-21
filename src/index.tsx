@@ -110,6 +110,7 @@ export type Props = {
   tooltip: typeof React.Component | React.FC<any>;
   className?: string;
   style?: Record<string, string>;
+  plainText?: boolean;
 };
 
 type State = {
